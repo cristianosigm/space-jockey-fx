@@ -1,0 +1,14 @@
+Appenders:
+  Console:
+    name: "CONSOLE"
+    PatternLayout:
+      pattern: "%d [%t] %p %c - %m%n"
+Loggers:
+  Logger:
+    name: "com.cs2tech"
+    level: "DEBUG"
+  Root:
+    level: "DEBUG"
+    AppenderRef:
+      ref: "CONSOLE"
+      level: "WARN"
