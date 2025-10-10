@@ -25,15 +25,14 @@ public abstract class CommonPlayer implements IAudioPlayer {
         try (InputStream input = CommonPlayer.class.getClassLoader().getResourceAsStream(configurationFilePath)) {
             logger.debug("Loading list of media files from: {}.", configurationFilePath);
 
-            final Properties properties = new Properties();
-
             if (input == null) {
                 logger.warn("Failed to load the list of media files.");
                 playerEnabled = false;
                 return;
             }
-            properties.load(input);
 
+            final Properties properties = new Properties();
+            properties.load(input);
             loadFiles(properties);
 
             logger.debug("List of media files loaded successfully.");

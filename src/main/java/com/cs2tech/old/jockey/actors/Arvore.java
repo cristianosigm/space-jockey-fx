@@ -43,10 +43,20 @@ public class Arvore extends SShip {
     private static final boolean[][] MATRIX = {{O, O, X, X, X, X, O, O}, {O, O, X, X, X, X, X, X}, {X, X, X, X, X, X, X, X}, {X, X, X, X, X, X, X, X}, {X, X, X, X, X, X, X, O}, {O, O, X, X, X, X, O, O}, {O, O, X, X, X, X, O, O}, {O, O, X, X, X, X, O, O}, {O, O, X, X, X, X, O, O}, {O, O, X, X, X, X, O, O}, {O, X, X, X, X, X, X, O}};
 
     public Arvore() {
-        super(new Point(IRenderable.gameConfig.getGameResolution().width, (Cenario.GROUND - (Arvore.MATRIX.length * GameFactory.getInstance()
+        super(
+            new Point(IRenderable.gameConfig.getGameResolution().width, (Cenario.GROUND - (Arvore.MATRIX.length * GameFactory.getInstance()
                 .getColision()
-                .getCollisionBlockSize().height) + 5)), Arvore.SPRITES, Arvore.SPRITES_INTERVAL, Arvore.SPEED, Arvore.MATRIX, CollisionHandler.TYPE_ENEMY, Directions.DIR_LEFT,
-            Arvore.BONUS, Arvore.ENERGY, Definitions.EFF_EXPLOSION_COMMON);
+                .getCollisionBlockSize().height) + 5)),
+            Arvore.SPRITES,
+            Arvore.SPRITES_INTERVAL,
+            Arvore.SPEED,
+            Arvore.MATRIX,
+            CollisionHandler.TYPE_ENEMY,
+            Directions.DIR_LEFT,
+            Arvore.BONUS,
+            Arvore.ENERGY,
+            Definitions.EFF_EXPLOSION_COMMON
+        );
         IRenderable.log.addDebug("NOVA ARVORE CRIADA. Pos = (" + getPosition().x + "," + getPosition().y + ").", this);
     }
 

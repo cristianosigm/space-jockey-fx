@@ -10,8 +10,13 @@ public class KeyboardController {
     private final Logger logger = LoggerFactory.getLogger(KeyboardController.class);
 
     public void keyPressed(KeyEvent key) {
-        logger.debug(" --> Key Pressed: {}", key.getCode());
+        //        logger.debug(" --> Key Pressed: {}", key.getCode());
         handleKey(key.getCode(), true);
+    }
+
+    public void keyReleased(KeyEvent key) {
+        //        logger.debug(" --> Key Released: {}", key.getCode());
+        handleKey(key.getCode(), false);
     }
 
     private void handleKey(KeyCode code, boolean action) {
@@ -21,10 +26,5 @@ public class KeyboardController {
             case KeyCode.LEFT -> GameElements.get().getPlayer().movingLeft(action);
             case KeyCode.RIGHT -> GameElements.get().getPlayer().movingRight(action);
         }
-    }
-
-    public void keyReleased(KeyEvent key) {
-        logger.debug(" --> Key Released: {}", key.getCode());
-        handleKey(key.getCode(), false);
     }
 }

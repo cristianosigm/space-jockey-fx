@@ -4,16 +4,16 @@ import com.cs2tech.framework.core.GameElements;
 import com.cs2tech.framework.physics.Collidable;
 import com.cs2tech.framework.physics.TransitoryCharacter;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 
-public class EnemyShipSprite extends Sprite implements TransitoryCharacter, Collidable {
+public abstract class EnemyShipSprite extends Sprite implements TransitoryCharacter, Collidable {
     private final Logger logger = LoggerFactory.getLogger(EnemyShipSprite.class);
 
-    private final int size = 40;
+    protected int width = 40;
+    protected int height = 80;
 
     public EnemyShipSprite(final Point initialPosition) {
         super(initialPosition);
@@ -24,9 +24,6 @@ public class EnemyShipSprite extends Sprite implements TransitoryCharacter, Coll
         speedIncrement = 2;
         speed = 3;
 
-        // default: move down
-        isMovingDown = true;
-
         logger.debug("Enemy created! Position: {}, {}", initialPosition.x, initialPosition.y);
     }
 
@@ -35,13 +32,15 @@ public class EnemyShipSprite extends Sprite implements TransitoryCharacter, Coll
         checkOutOfScreen(gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         handleActions();
 
-        gc.setFill(Color.YELLOW);
-        gc.fillRect(getPosition().getX(), getPosition().getY(), size, size);
+        //        gc.setFill(Color.YELLOW);
+        //        gc.fillRect(getPosition().getX(), getPosition().getY(), width, height);
+
+        gc.drawImage( GameElements.get().getImage(currentImageIndex), getPosition().x, getPosition().y, width, height);
     }
 
     @Override
     public void checkOutOfScreen(double windowWidth, double windowHeight) {
-        if ((getPosition().getX() - size < 0) || (getPosition().getX() > windowWidth) || (getPosition().getY() + size < 0) ||
+        if ((getPosition().getX() - width < 0) || (getPosition().getX() > windowWidth) || (getPosition().getY() + height < 0) ||
             (getPosition().getY() > windowHeight)) {
             if (!die()) {
                 logger.error("Failed to kill an enemy that went out of the screen.");

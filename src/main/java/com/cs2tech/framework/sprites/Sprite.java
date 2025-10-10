@@ -19,6 +19,8 @@ public abstract class Sprite implements Renderable {
     protected boolean isMovingRight = false;
     protected boolean isShooting = false;
 
+    protected int currentImageIndex = 0;
+
     public Sprite(Point initialPosition) {
         this.initialPosition = initialPosition;
         this.position = initialPosition;

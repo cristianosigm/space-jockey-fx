@@ -5,8 +5,9 @@ import com.cs2tech.framework.core.GameElements;
 import com.cs2tech.framework.graphics.GraphicsRenderer;
 import com.cs2tech.framework.media.MidiPlayer;
 import com.cs2tech.framework.media.WavPlayer;
-import com.cs2tech.framework.sprites.EnemyShipSprite;
+import com.cs2tech.jockey.sprites.JetFighter;
 import com.cs2tech.jockey.sprites.PlayerOne;
+import com.cs2tech.jockey.sprites.Tree;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
@@ -44,8 +45,9 @@ public class JockeyApplication extends Application {
         final WavPlayer effects = new WavPlayer();
         effects.play(1);
 
-        // adding one sample enemy
-        GameElements.get().getRenderables().add(new EnemyShipSprite(new Point(getRandomXPosition(), 0)));
+        // adding a few sample enemies
+        GameElements.get().getRenderables().add(new JetFighter(new Point(WINDOW_WIDTH - 1, getRandomYPosition())));
+        GameElements.get().getRenderables().add(new Tree(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         // adding player --------------------------------------------------------------------------------
         GameElements.get().addPlayer(new PlayerOne(new Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 49)));
@@ -60,7 +62,7 @@ public class JockeyApplication extends Application {
         System.exit(0);
     }
 
-    private int getRandomXPosition() {
-        return (int) Math.ceil(Math.random() * WINDOW_WIDTH);
+    private int getRandomYPosition() {
+        return (int) Math.ceil(Math.random() * (WINDOW_HEIGHT - 40)) + 20;
     }
 }

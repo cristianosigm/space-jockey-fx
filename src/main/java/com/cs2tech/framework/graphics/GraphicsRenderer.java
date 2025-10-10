@@ -9,11 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class GraphicsRenderer {
-    private final Logger logger = LoggerFactory.getLogger(GraphicsRenderer.class);
 
     // TODO: read from configuration file
     private final int FPS = 60;
@@ -22,7 +19,7 @@ public class GraphicsRenderer {
     private final Canvas canvas;
     private final GraphicsContext gc;
 
-    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) {
+    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) throws Exception {
         this.pane = pane;
         canvas = new Canvas(screenSize.getWidth(), screenSize.getHeight());
         gc = canvas.getGraphicsContext2D();
