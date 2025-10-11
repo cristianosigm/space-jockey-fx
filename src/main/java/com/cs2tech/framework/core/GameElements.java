@@ -13,12 +13,15 @@ import java.util.Properties;
 
 public class GameElements {
     private static final GameElements instance = new GameElements();
+
     private final Logger logger = LoggerFactory.getLogger(GameElements.class);
     private final LinkedList<Renderable> renderables = new LinkedList<>();
     private final LinkedList<Image> images = new LinkedList<>();
     private final Size gameResolution = new Size(800, 600);
     private PlayerSprite player;
     private GameLevel currentLevel;
+
+    private long screenRefreshRate;
 
     private GameElements() {
         loadImages();
@@ -54,6 +57,15 @@ public class GameElements {
 
     public void playLevel(GameLevel level) {
         currentLevel = level;
+    }
+
+    public long getScreenRefreshRate() {
+        return screenRefreshRate;
+    }
+
+    public void setScreenRefreshRate(final long screenRefreshRate) {
+        logger.info("Game refresh rate set to {}", screenRefreshRate);
+        this.screenRefreshRate = screenRefreshRate;
     }
 
     private void loadImages() {
