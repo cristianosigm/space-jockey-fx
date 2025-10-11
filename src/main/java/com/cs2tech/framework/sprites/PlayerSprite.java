@@ -1,9 +1,9 @@
 package com.cs2tech.framework.sprites;
 
 import com.cs2tech.framework.core.*;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.*;
 
-import java.util.List;
+import java.util.*;
 
 public abstract class PlayerSprite extends Sprite {
 
@@ -11,8 +11,7 @@ public abstract class PlayerSprite extends Sprite {
     protected boolean isPressingSelect = false;
     protected boolean isPressingStart = false;
 
-    public PlayerSprite(final Position initialPosition, final Size size, final Speed speed, final List<Integer> imageIndexes,
-                        final AnimationSettings animationSettings) {
+    public PlayerSprite(final Position initialPosition, final Size size, final Speed speed, final List<Integer> imageIndexes, final AnimationSettings animationSettings) {
         super(initialPosition, size, speed, imageIndexes, animationSettings);
     }
 

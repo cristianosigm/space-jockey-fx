@@ -1,25 +1,35 @@
 package com.cs2tech.framework.graphics;
 
-import com.cs2tech.framework.core.GameElements;
-import javafx.animation.AnimationTimer;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import com.cs2tech.framework.core.*;
+import javafx.animation.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class GraphicsRenderer {
+    // TODO: get the refresh rate as the samle below:
 
-    // TODO: read from configuration file
+    //    stage.setOnShown(e -> {
+    //        Screen screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight())
+    //                .get(0);
+    //        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    //        GraphicsDevice d = ge.getScreenDevices()[Screen.getScreens().indexOf(screen)];
+    //
+    //        int r = d.getDisplayMode().getRefreshRate();
+    //        System.out.println("Screen refresh rate : " + r);
+    //        //Calculate frame duration in nanoseconds
+    //        this.frameNs = 1_000_000_000L / refreshRate; //Store it as it better suits you
+    //    });
+
     private final int FPS = 60;
 
     private final Pane pane;
     private final Canvas canvas;
     private final GraphicsContext gc;
 
-    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) throws Exception {
+    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) {
         this.pane = pane;
         canvas = new Canvas(screenSize.getWidth(), screenSize.getHeight());
         gc = canvas.getGraphicsContext2D();
@@ -36,6 +46,7 @@ public class GraphicsRenderer {
         new AnimationTimer() {
             long lastFrameTime = 0;
 
+            @Override
             public void handle(long now) {
                 if (lastFrameTime == 0) {
                     lastFrameTime = now;
@@ -52,10 +63,6 @@ public class GraphicsRenderer {
     }
 
     private void drawFrame(GraphicsContext gc) {
-        // paint background
-//        gc.setFill(Color.BLACK);
-//        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
         // rendering level
         GameElements.get().getCurrentLevel().draw(gc);
 
