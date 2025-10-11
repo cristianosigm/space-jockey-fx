@@ -1,30 +1,21 @@
 package com.cs2tech.framework.sprites;
 
-import com.cs2tech.framework.core.GameElements;
+import com.cs2tech.framework.core.*;
 import com.cs2tech.framework.physics.Collidable;
 import com.cs2tech.framework.physics.TransitoryCharacter;
 import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.util.List;
 
 public abstract class EnemyShipSprite extends Sprite implements TransitoryCharacter, Collidable {
     private final Logger logger = LoggerFactory.getLogger(EnemyShipSprite.class);
 
-    protected int width = 40;
-    protected int height = 80;
-
-    public EnemyShipSprite(final Point initialPosition) {
-        super(initialPosition);
-
-        // overriding speed settings
-        // TODO: read from configuration
-        speedMaximum = 8;
-        speedIncrement = 2;
-        speed = 3;
-
-        logger.debug("Enemy created! Position: {}, {}", initialPosition.x, initialPosition.y);
+    public EnemyShipSprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes,
+                           final AnimationSettings animationSettings) {
+        super(position, size, speed, imageIndexes, animationSettings);
+        logger.debug("Enemy created! Position: {}; size: {}.", position, size);
     }
 
     @Override
@@ -32,16 +23,12 @@ public abstract class EnemyShipSprite extends Sprite implements TransitoryCharac
         checkOutOfScreen(gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         handleActions();
 
-        //        gc.setFill(Color.YELLOW);
-        //        gc.fillRect(getPosition().getX(), getPosition().getY(), width, height);
-
-        gc.drawImage( GameElements.get().getImage(currentImageIndex), getPosition().x, getPosition().y, width, height);
+        gc.drawImage(GameElements.get().getImage(imageIndexes.next()), position.x, position.y, size.width, size.height);
     }
 
     @Override
     public void checkOutOfScreen(double windowWidth, double windowHeight) {
-        if ((getPosition().getX() - width < 0) || (getPosition().getX() > windowWidth) || (getPosition().getY() + height < 0) ||
-            (getPosition().getY() > windowHeight)) {
+        if ((position.x - size.width < 0) || (position.x > windowWidth) || (position.y + size.height < 0) || (position.y > windowHeight)) {
             if (!die()) {
                 logger.error("Failed to kill an enemy that went out of the screen.");
             }

@@ -3,19 +3,14 @@ package com.cs2tech.framework.controllers;
 import com.cs2tech.framework.core.GameElements;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class KeyboardController {
-    private final Logger logger = LoggerFactory.getLogger(KeyboardController.class);
 
     public void keyPressed(KeyEvent key) {
-        //        logger.debug(" --> Key Pressed: {}", key.getCode());
         handleKey(key.getCode(), true);
     }
 
     public void keyReleased(KeyEvent key) {
-        //        logger.debug(" --> Key Released: {}", key.getCode());
         handleKey(key.getCode(), false);
     }
 

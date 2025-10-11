@@ -1,6 +1,9 @@
 package com.cs2tech.framework.sprites;
 
-import java.awt.*;
+import com.cs2tech.framework.core.*;
+import javafx.scene.canvas.GraphicsContext;
+
+import java.util.List;
 
 public abstract class PlayerSprite extends Sprite {
 
@@ -8,8 +11,9 @@ public abstract class PlayerSprite extends Sprite {
     protected boolean isPressingSelect = false;
     protected boolean isPressingStart = false;
 
-    public PlayerSprite(final Point initialPosition) {
-        super(initialPosition);
+    public PlayerSprite(final Position initialPosition, final Size size, final Speed speed, final List<Integer> imageIndexes,
+                        final AnimationSettings animationSettings) {
+        super(initialPosition, size, speed, imageIndexes, animationSettings);
     }
 
     public void throwingBomb(boolean value) {
@@ -22,5 +26,20 @@ public abstract class PlayerSprite extends Sprite {
 
     public void pressingStart(boolean value) {
         isPressingStart = value;
+    }
+
+    @Override
+    public void draw(final GraphicsContext gc) {
+        handleActions();
+
+        gc.drawImage(GameElements.get().getImage(getImageIndex()), position.x, position.y, size.width, size.height);
+    }
+
+    private int getImageIndex() {
+        if (animationSettings.shouldCycleStaticImage()) {
+            return imageIndexes.next();
+        } else {
+            return imageIndexes.current();
+        }
     }
 }

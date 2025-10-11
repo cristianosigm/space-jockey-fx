@@ -1,39 +1,38 @@
 package com.cs2tech.framework.sprites;
 
+import com.cs2tech.framework.core.*;
 import com.cs2tech.framework.graphics.Renderable;
+import javafx.scene.image.ImageView;
 
-import java.awt.*;
+import java.util.List;
 
 public abstract class Sprite implements Renderable {
+    public final Position position;
+    public final Size size;
+    public final Speed speed;
 
-    private final Point initialPosition;
-    private final Point position;
-
-    protected int speedIncrement;
-    protected int speedMaximum;
-    protected int speed;
-
+    protected final ImageIndexList imageIndexes;
+    protected final AnimationSettings animationSettings;
     protected boolean isMovingUp = false;
     protected boolean isMovingDown = false;
     protected boolean isMovingLeft = false;
     protected boolean isMovingRight = false;
     protected boolean isShooting = false;
 
-    protected int currentImageIndex = 0;
+    protected List<ImageView> viewSet;
 
-    public Sprite(Point initialPosition) {
-        this.initialPosition = initialPosition;
-        this.position = initialPosition;
-
-        // initial and maximum speed
-        // TODO: read from configuration file
-        speedMaximum = 10;
-        speed = 2;
-        speedIncrement = 2;
+    public Sprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes,
+                  final AnimationSettings animationSettings) {
+        this.position = position;
+        this.size = size;
+        this.speed = speed;
+        this.imageIndexes = new ImageIndexList(imageIndexes);
+        this.animationSettings = animationSettings;
     }
 
-    public Point getPosition() {
-        return position;
+    private ImageView getView() {
+        // todo: handle image cycling
+        return viewSet.getFirst();
     }
 
     // controller actions
@@ -59,22 +58,22 @@ public abstract class Sprite implements Renderable {
     }
 
     public void incrementSpeed() {
-        speed += speedIncrement;
+        speed.increment();
     }
 
     // TODO: implement remaining actions
     public void handleActions() {
         if (isMovingUp) {
-            getPosition().y -= speed;
+            position.y -= speed.getCurrent();
         }
         if (isMovingDown) {
-            getPosition().y += speed;
+            position.y += speed.getCurrent();
         }
         if (isMovingLeft) {
-            getPosition().x -= speed;
+            position.x -= speed.getCurrent();
         }
         if (isMovingRight) {
-            getPosition().x += speed;
+            position.x += speed.getCurrent();
         }
     }
 }

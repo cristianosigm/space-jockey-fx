@@ -1,6 +1,7 @@
 package com.cs2tech.framework.core;
 
 import com.cs2tech.framework.graphics.Renderable;
+import com.cs2tech.framework.levels.GameLevel;
 import com.cs2tech.framework.sprites.PlayerSprite;
 import javafx.scene.image.Image;
 import org.slf4j.Logger;
@@ -11,13 +12,13 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class GameElements {
-    private final Logger logger = LoggerFactory.getLogger(GameElements.class);
-
     private static final GameElements instance = new GameElements();
-
-    private PlayerSprite player;
+    private final Logger logger = LoggerFactory.getLogger(GameElements.class);
     private final LinkedList<Renderable> renderables = new LinkedList<>();
     private final LinkedList<Image> images = new LinkedList<>();
+    private final Size gameResolution = new Size(800, 600);
+    private PlayerSprite player;
+    private GameLevel currentLevel;
 
     private GameElements() {
         loadImages();
@@ -41,6 +42,18 @@ public class GameElements {
 
     public Image getImage(int index) {
         return images.get(index);
+    }
+
+    public Size getGameResolution() {
+        return gameResolution;
+    }
+
+    public GameLevel getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void playLevel(GameLevel level) {
+        currentLevel = level;
     }
 
     private void loadImages() {

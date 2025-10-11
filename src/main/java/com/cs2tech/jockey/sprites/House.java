@@ -8,10 +8,9 @@ import com.cs2tech.framework.sprites.EnemyShipSprite;
 
 import java.util.List;
 
-public class JetFighter extends EnemyShipSprite {
-    public JetFighter(final Position initialPosition) {
-        super(initialPosition,
-              new Size(60, 20), new Speed(10, 0, 10), List.of(20), new AnimationSettings(0));
+public class House extends EnemyShipSprite {
+    public House(int windowWidth, int windowHeight) {
+        super(new Position(windowWidth - 1, windowHeight - 140), new Size(81, 59), new Speed(2, 0, 2), List.of(23), new AnimationSettings(0));
 
         movingLeft(true);
     }
