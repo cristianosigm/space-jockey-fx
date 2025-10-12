@@ -16,7 +16,7 @@ public class MidiPlayer extends CommonPlayer {
     public MidiPlayer() {
         super("musics.properties");
 
-        if(isPlayerEnabled()) {
+        if (isPlayerEnabled()) {
             try {
                 midiSequencer = MidiSystem.getSequencer(true);
                 midiSequencer.open();

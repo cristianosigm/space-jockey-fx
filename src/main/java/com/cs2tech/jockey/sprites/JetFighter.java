@@ -11,7 +11,7 @@ import java.util.List;
 public class JetFighter extends EnemyShipSprite {
     public JetFighter(final Position initialPosition) {
         super(initialPosition,
-              new Size(60, 20), new Speed(10, 0, 10), List.of(20), new AnimationSettings(0));
+                new Size(60, 20), new Speed(10, 0, 10), List.of(20), new AnimationSettings(0));
 
         movingLeft(true);
     }

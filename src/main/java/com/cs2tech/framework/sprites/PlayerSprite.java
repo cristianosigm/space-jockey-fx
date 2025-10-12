@@ -1,9 +1,9 @@
 package com.cs2tech.framework.sprites;
 
 import com.cs2tech.framework.core.*;
-import javafx.scene.canvas.*;
+import javafx.scene.canvas.GraphicsContext;
 
-import java.util.*;
+import java.util.List;
 
 public abstract class PlayerSprite extends Sprite {
 

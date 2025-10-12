@@ -20,7 +20,8 @@ public class KeyboardController {
             case KeyCode.DOWN -> GameElements.get().getPlayer().movingDown(action);
             case KeyCode.LEFT -> GameElements.get().getPlayer().movingLeft(action);
             case KeyCode.RIGHT -> GameElements.get().getPlayer().movingRight(action);
-            default -> {}
+            default -> {
+            }
         }
     }
 }

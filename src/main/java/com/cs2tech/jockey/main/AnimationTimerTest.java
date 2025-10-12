@@ -169,7 +169,7 @@ public class AnimationTimerTest extends Application {
 
         final double v1 = (2 * b2.getMass() * u2 + u1 * massDiff) / massSum; // These equations are derived for one-dimensional collision by
         final double v2 =
-            (2 * b1.getMass() * u1 - u2 * massDiff) / massSum; // solving equations for conservation of momentum and conservation of energy
+                (2 * b1.getMass() * u1 - u2 * massDiff) / massSum; // solving equations for conservation of momentum and conservation of energy
 
         final double u1PerpX = xVelocity1 - u1 * unitContactX; // Components of ball 1 velocity in direction perpendicular
         final double u1PerpY = yVelocity1 - u1 * unitContactY; // to contact vector. This doesn't change with collision

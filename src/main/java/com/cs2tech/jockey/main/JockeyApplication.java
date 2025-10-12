@@ -17,7 +17,6 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,11 +40,11 @@ public class JockeyApplication extends Application {
         scene.addEventFilter(KeyEvent.KEY_RELEASED, key -> keyboardController.keyReleased(key));
 
         // adding media players -------------------------------------------------------------------------
-//        final MidiPlayer musicPlayer = new MidiPlayer();
-//        musicPlayer.play(1);
-//
-//        final WavPlayer effects = new WavPlayer();
-//        effects.play(1);
+        final MidiPlayer musicPlayer = new MidiPlayer();
+        musicPlayer.play(1);
+
+        final WavPlayer effects = new WavPlayer();
+        effects.play(1);
 
         // Adding a level -------------------------------------------------------------------------------
         GameElements.get().playLevel(new LevelOne());
