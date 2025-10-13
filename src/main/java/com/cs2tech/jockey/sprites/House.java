@@ -9,7 +9,7 @@ import com.cs2tech.framework.sprites.EnemyShipSprite;
 import java.util.List;
 
 public class House extends EnemyShipSprite {
-    public House(int windowWidth, int windowHeight) {
+    public House(double windowWidth, double windowHeight) {
         super(new Position(windowWidth - 1, windowHeight - 140), new Size(81, 59), new Speed(2, 0, 2), List.of(23), new AnimationSettings(0));
 
         movingLeft(true);

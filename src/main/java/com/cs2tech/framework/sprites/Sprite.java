@@ -21,18 +21,12 @@ public abstract class Sprite implements Renderable {
 
     protected List<ImageView> viewSet;
 
-    public Sprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes,
-                  final AnimationSettings animationSettings) {
+    public Sprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes, final AnimationSettings animationSettings) {
         this.position = position;
         this.size = size;
         this.speed = speed;
         this.imageIndexes = new ImageIndexList(imageIndexes);
         this.animationSettings = animationSettings;
-    }
-
-    private ImageView getView() {
-        // todo: handle image cycling
-        return viewSet.getFirst();
     }
 
     // controller actions

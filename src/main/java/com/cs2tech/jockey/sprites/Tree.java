@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Tree extends EnemyShipSprite {
 
-    public Tree(int windowWidth, int windowHeight) {
+    public Tree(double windowWidth, double windowHeight) {
         super(new Position(windowWidth - 1, windowHeight - 140), new Size(74, 100), new Speed(3, 0, 3), List.of(19), new AnimationSettings(0));
 
         movingLeft(true);

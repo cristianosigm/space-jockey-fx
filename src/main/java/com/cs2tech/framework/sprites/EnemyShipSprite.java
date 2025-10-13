@@ -12,23 +12,21 @@ import java.util.List;
 public abstract class EnemyShipSprite extends Sprite implements TransitoryCharacter, Collidable {
     private final Logger logger = LoggerFactory.getLogger(EnemyShipSprite.class);
 
-    public EnemyShipSprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes,
-                           final AnimationSettings animationSettings) {
+    public EnemyShipSprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes, final AnimationSettings animationSettings) {
         super(position, size, speed, imageIndexes, animationSettings);
         logger.debug("Enemy created! Position: {}; size: {}.", position, size);
     }
 
     @Override
     public void draw(final GraphicsContext gc) {
-        checkOutOfScreen(gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         handleActions();
 
         gc.drawImage(GameElements.get().getImage(imageIndexes.next()), position.x, position.y, size.width, size.height);
     }
 
     @Override
-    public void checkOutOfScreen(double windowWidth, double windowHeight) {
-        if ((position.x - size.width < 0) || (position.x > windowWidth) || (position.y + size.height < 0) || (position.y > windowHeight)) {
+    public void checkOutOfScreen() {
+        if ((position.x - size.width < 0) || (position.x > GameElements.get().getGameResolution().width) || (position.y + size.height < 0) || (position.y > GameElements.get().getGameResolution().height)) {
             if (!die()) {
                 logger.error("Failed to kill an enemy that went out of the screen.");
             }

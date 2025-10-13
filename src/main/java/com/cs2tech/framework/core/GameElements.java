@@ -10,18 +10,18 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GameElements {
     private static final GameElements instance = new GameElements();
 
     private final Logger logger = LoggerFactory.getLogger(GameElements.class);
-    private final LinkedList<Renderable> renderables = new LinkedList<>();
+    private final ConcurrentLinkedQueue<Renderable> renderables = new ConcurrentLinkedQueue<>();
     private final LinkedList<Image> images = new LinkedList<>();
     private final Size gameResolution = new Size(800, 600);
+
     private PlayerSprite player;
     private GameLevel currentLevel;
-
-    private long screenRefreshRate;
 
     private GameElements() {
         loadImages();
@@ -31,7 +31,7 @@ public class GameElements {
         return instance;
     }
 
-    public LinkedList<Renderable> getRenderables() {
+    public ConcurrentLinkedQueue<Renderable> getRenderables() {
         return renderables;
     }
 
@@ -60,12 +60,7 @@ public class GameElements {
     }
 
     public long getScreenRefreshRate() {
-        return screenRefreshRate;
-    }
-
-    public void setScreenRefreshRate(final long screenRefreshRate) {
-        logger.info("Game refresh rate set to {}", screenRefreshRate);
-        this.screenRefreshRate = screenRefreshRate;
+        return 60;
     }
 
     private void loadImages() {
@@ -86,7 +81,10 @@ public class GameElements {
             final int listSize = Integer.parseInt(properties.getProperty("QTY"));
 
             for (int i = 0; i < listSize; i++) {
-                images.add(new Image(loader.getResourceAsStream(properties.getProperty("IMG" + i))));
+                InputStream imageStream = loader.getResourceAsStream(properties.getProperty("IMG" + i));
+                if (imageStream != null && imageStream.available() > 0) {
+                    images.add(new Image(imageStream));
+                }
             }
 
             logger.debug("List of images loaded successfully.");
