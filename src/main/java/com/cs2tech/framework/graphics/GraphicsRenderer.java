@@ -3,7 +3,6 @@ package com.cs2tech.framework.graphics;
 import com.cs2tech.framework.core.GameElements;
 import com.cs2tech.framework.physics.CollisionEngine;
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Dimension2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,10 +12,16 @@ import javafx.stage.Stage;
 public class GraphicsRenderer {
     private final CollisionEngine ce = new CollisionEngine();
 
-    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) {
-        Canvas canvas = new Canvas(screenSize.getWidth(), screenSize.getHeight());
+    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane) {
+        Canvas canvas = new Canvas(
+                GameElements.get()
+                            .getGameResolution().width,
+                GameElements.get()
+                            .getGameResolution().height
+        );
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        pane.getChildren().add(canvas);
+        pane.getChildren()
+            .add(canvas);
 
         createAnimationTimer(gc);
 
@@ -26,7 +31,8 @@ public class GraphicsRenderer {
     }
 
     private void createAnimationTimer(GraphicsContext gc) {
-        final long targetFrameTime = 1000 / GameElements.get().getScreenRefreshRate();
+        final long targetFrameTime = 1000 / GameElements.get()
+                                                        .getScreenRefreshRate();
 
         new AnimationTimer() {
             long lastFrameTime = 0;
@@ -37,8 +43,6 @@ public class GraphicsRenderer {
                     ce.checkCollision();
                     drawFrame(gc);
                     lastFrameTime = System.currentTimeMillis();
-
-                    System.out.println(" --> Renderables size: " + GameElements.get().getRenderables().size());
                 }
             }
         }.start();
@@ -46,12 +50,17 @@ public class GraphicsRenderer {
 
     private void drawFrame(GraphicsContext gc) {
         // rendering level
-        GameElements.get().getCurrentLevel().draw(gc);
+        GameElements.get()
+                    .getCurrentLevel()
+                    .draw(gc);
 
         // drawing sprites
-        GameElements.get().getRenderables().forEach(entry -> entry.draw(gc));
-        GameElements.get().getPlayer().draw(gc);
+        GameElements.get()
+                    .getRenderables()
+                    .forEach(entry -> entry.draw(gc));
+        GameElements.get()
+                    .getPlayer()
+                    .draw(gc);
     }
-
 
 }

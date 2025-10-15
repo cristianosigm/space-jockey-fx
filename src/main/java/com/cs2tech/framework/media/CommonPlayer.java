@@ -22,7 +22,10 @@ public abstract class CommonPlayer implements IAudioPlayer {
     }
 
     private void loadList(final String configurationFilePath) {
-        try (InputStream input = CommonPlayer.class.getClassLoader().getResourceAsStream(configurationFilePath)) {
+        try (
+                InputStream input = CommonPlayer.class.getClassLoader()
+                                                      .getResourceAsStream(configurationFilePath)
+        ) {
             logger.debug("Loading list of media files from: {}.", configurationFilePath);
 
             if (input == null) {
@@ -43,7 +46,7 @@ public abstract class CommonPlayer implements IAudioPlayer {
         } catch (Exception e) {
             logger.error("Unhandled exception when trying to load media files {}. Reason: ", configurationFilePath, e);
         } finally {
-            if (list == null || list.size() < 1) {
+            if (list == null || list.isEmpty()) {
                 setPlayerEnabled(false);
             }
         }
@@ -54,7 +57,8 @@ public abstract class CommonPlayer implements IAudioPlayer {
         list = new ArrayList<>();
 
         for (int i = 0; i < listSize; i++) {
-            list.add(CommonPlayer.class.getClassLoader().getResourceAsStream(properties.getProperty("F" + i)));
+            list.add(CommonPlayer.class.getClassLoader()
+                                       .getResourceAsStream(properties.getProperty("F" + i)));
         }
     }
 
@@ -92,7 +96,7 @@ public abstract class CommonPlayer implements IAudioPlayer {
     }
 
     public void setPlayerEnabled(final boolean playerEnabled) {
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             this.playerEnabled = playerEnabled;
         } else {
             this.playerEnabled = false;

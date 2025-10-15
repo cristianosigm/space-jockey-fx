@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import java.util.List;
 
 public abstract class Sprite implements Renderable {
-    public final Position position;
+    private Position position;
     public final Size size;
     public final Speed speed;
 
@@ -21,12 +21,23 @@ public abstract class Sprite implements Renderable {
 
     protected List<ImageView> viewSet;
 
-    public Sprite(final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes, final AnimationSettings animationSettings) {
+    public Sprite(
+            final Position position, final Size size, final Speed speed, final List<Integer> imageIndexes,
+            final AnimationSettings animationSettings
+    ) {
         this.position = position;
         this.size = size;
         this.speed = speed;
         this.imageIndexes = new ImageIndexList(imageIndexes);
         this.animationSettings = animationSettings;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(final Position position) {
+        this.position = position;
     }
 
     // controller actions

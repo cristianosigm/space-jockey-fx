@@ -6,9 +6,9 @@ import com.cs2tech.jockey.main.JockeyUtils;
 
 import java.util.List;
 
-public class House extends EnemyShipSprite {
-    public House() {
-        super(new Position(), new ProportionalSize(7.91, 7.68), new Speed(4, 0, 4), List.of(23), new AnimationSettings(0));
+public class Tank extends EnemyShipSprite {
+    public Tank() {
+        super(new Position(), new ProportionalSize(10.74, 6.51), new Speed(5, 0, 5), List.of(14, 15, 16), new AnimationSettings(0));
 
         setPosition(new Position(
                 GameElements.get()
@@ -17,5 +17,4 @@ public class House extends EnemyShipSprite {
 
         movingLeft(true);
     }
-
 }

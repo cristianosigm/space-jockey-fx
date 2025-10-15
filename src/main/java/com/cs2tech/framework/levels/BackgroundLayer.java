@@ -32,37 +32,48 @@ public class BackgroundLayer implements Renderable {
 
     @Override
     public void draw(final GraphicsContext gc) {
-        final Image cur = GameElements.get().getImage(currentImageIndex);
-        final Image next = GameElements.get().getImage(nextImageIndex);
+        final Image cur = GameElements.get()
+                                      .getImage(currentImageIndex);
+        final Image next = GameElements.get()
+                                       .getImage(nextImageIndex);
 
         setup(cur, next);
         scroll();
 
-        gc.drawImage(cur, currentImagePosition.x, currentImagePosition.y);
-        gc.drawImage(next, nextImagePosition.x, nextImagePosition.y);
+        gc.drawImage(cur, currentImagePosition.x, currentImagePosition.y, GameElements.get().getGameResolution().width,
+                GameElements.get().getGameResolution().height);
+        gc.drawImage(next, nextImagePosition.x, nextImagePosition.y, GameElements.get().getGameResolution().width,
+                GameElements.get().getGameResolution().height);
     }
 
     private void setup(final Image cur, final Image next) {
         if (!setupComplete) {
-            currentImageSize.width = cur.getWidth();
-            currentImageSize.height = cur.getHeight();
+            // TODO: handle BG images in sizes different than the screen
+            currentImageSize.width = GameElements.get()
+                                                 .getGameResolution().width;
+            currentImageSize.height = GameElements.get()
+                                                  .getGameResolution().height;
 
-            nextImageSize.width = next.getWidth();
-            nextImageSize.height = next.getHeight();
+            nextImageSize.width = GameElements.get()
+                                              .getGameResolution().width;
+            nextImageSize.height = GameElements.get()
+                                               .getGameResolution().height;
 
             switch (direction) {
                 case UP:
                     nextImagePosition.y = currentImageSize.height;
                     break;
                 case DOWN:
-                    currentImagePosition.y = GameElements.get().getGameResolution().height - currentImageSize.height;
+                    currentImagePosition.y = GameElements.get()
+                                                         .getGameResolution().height - currentImageSize.height;
                     nextImagePosition.y = currentImagePosition.y - nextImageSize.height;
                     break;
                 case LEFT:
                     nextImagePosition.x = currentImageSize.width;
                     break;
                 case RIGHT:
-                    currentImagePosition.x = GameElements.get().getGameResolution().width - currentImageSize.width;
+                    currentImagePosition.x = GameElements.get()
+                                                         .getGameResolution().width - currentImageSize.width;
                     nextImagePosition.x = currentImagePosition.x - nextImageSize.width;
             }
             setupComplete = true;
@@ -93,9 +104,11 @@ public class BackgroundLayer implements Renderable {
     private void scrollRight() {
         currentImagePosition.x += scrollingSpeed;
         nextImagePosition.x += scrollingSpeed;
-        if (currentImagePosition.x > GameElements.get().getGameResolution().width) {
+        if (currentImagePosition.x > GameElements.get()
+                                                 .getGameResolution().width) {
             currentImageIndex = nextImageIndex;
-            currentImagePosition.x = GameElements.get().getGameResolution().width - currentImageSize.width;
+            currentImagePosition.x = GameElements.get()
+                                                 .getGameResolution().width - currentImageSize.width;
             nextImagePosition.x = currentImagePosition.x - nextImageSize.width;
         }
     }
@@ -115,7 +128,8 @@ public class BackgroundLayer implements Renderable {
         nextImagePosition.y += scrollingSpeed;
         if (currentImagePosition.y > currentImageSize.height) {
             currentImageIndex = nextImageIndex;
-            currentImagePosition.y = GameElements.get().getGameResolution().height - currentImageSize.height;
+            currentImagePosition.y = GameElements.get()
+                                                 .getGameResolution().height - currentImageSize.height;
             nextImagePosition.y = currentImagePosition.y - nextImageSize.height;
         }
     }

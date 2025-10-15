@@ -16,10 +16,18 @@ public class KeyboardController {
 
     private void handleKey(KeyCode code, boolean action) {
         switch (code) {
-            case KeyCode.UP -> GameElements.get().getPlayer().movingUp(action);
-            case KeyCode.DOWN -> GameElements.get().getPlayer().movingDown(action);
-            case KeyCode.LEFT -> GameElements.get().getPlayer().movingLeft(action);
-            case KeyCode.RIGHT -> GameElements.get().getPlayer().movingRight(action);
+            case KeyCode.UP -> GameElements.get()
+                                           .getPlayer()
+                                           .movingUp(action);
+            case KeyCode.DOWN -> GameElements.get()
+                                             .getPlayer()
+                                             .movingDown(action);
+            case KeyCode.LEFT -> GameElements.get()
+                                             .getPlayer()
+                                             .movingLeft(action);
+            case KeyCode.RIGHT -> GameElements.get()
+                                              .getPlayer()
+                                              .movingRight(action);
             default -> {
             }
         }

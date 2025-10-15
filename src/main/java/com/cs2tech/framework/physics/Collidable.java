@@ -1,8 +1,14 @@
 package com.cs2tech.framework.physics;
 
+import javafx.scene.shape.Rectangle;
+
 public interface Collidable {
 
-    boolean die();
+    Rectangle getCollisionBox();
+
+    void die();
+
+    void handleCollision(Collidable anotherCollidable);
 
     void takeHit(int hitPoints);
 

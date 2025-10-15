@@ -48,25 +48,32 @@ public class AnimationTimerTest extends Application {
 
         constrainBallsOnResize(ballContainer);
 
-        ballContainer.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() == 2) {
-                    balls.clear();
-                    createBalls(NUM_BALLS, MIN_RADIUS, MAX_RADIUS, MIN_SPEED, MAX_SPEED, ballContainer.getWidth() / 2, ballContainer.getHeight() / 2);
+        ballContainer.addEventHandler(
+                MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (event.getClickCount() == 2) {
+                            balls.clear();
+                            createBalls(
+                                    NUM_BALLS, MIN_RADIUS, MAX_RADIUS, MIN_SPEED, MAX_SPEED, ballContainer.getWidth() / 2,
+                                    ballContainer.getHeight() / 2
+                            );
+                        }
+                    }
                 }
-            }
-        });
+        );
 
         balls.addListener(new ListChangeListener<Ball>() {
             @Override
             public void onChanged(Change<? extends Ball> change) {
                 while (change.next()) {
                     for (Ball b : change.getAddedSubList()) {
-                        ballContainer.getChildren().add(b.getView());
+                        ballContainer.getChildren()
+                                     .add(b.getView());
                     }
                     for (Ball b : change.getRemoved()) {
-                        ballContainer.getChildren().remove(b.getView());
+                        ballContainer.getChildren()
+                                     .remove(b.getView());
                     }
                 }
             }
@@ -76,7 +83,8 @@ public class AnimationTimerTest extends Application {
 
         final BorderPane root = new BorderPane();
         final Label stats = new Label();
-        stats.textProperty().bind(frameStats.textProperty());
+        stats.textProperty()
+             .bind(frameStats.textProperty());
 
         root.setCenter(ballContainer);
         root.setBottom(stats);
@@ -169,7 +177,8 @@ public class AnimationTimerTest extends Application {
 
         final double v1 = (2 * b2.getMass() * u2 + u1 * massDiff) / massSum; // These equations are derived for one-dimensional collision by
         final double v2 =
-                (2 * b1.getMass() * u1 - u2 * massDiff) / massSum; // solving equations for conservation of momentum and conservation of energy
+                (2 * b1.getMass() * u1 - u2 * massDiff) / massSum; // solving equations for conservation of momentum and conservation of
+        // energy
 
         final double u1PerpX = xVelocity1 - u1 * unitContactX; // Components of ball 1 velocity in direction perpendicular
         final double u1PerpY = yVelocity1 - u1 * unitContactY; // to contact vector. This doesn't change with collision
@@ -182,7 +191,8 @@ public class AnimationTimerTest extends Application {
         b2.setYVelocity(v2 * unitContactY + u2PerpY);
     }
 
-    private void createBalls(int numBalls, double minRadius, double maxRadius, double minSpeed, double maxSpeed, double initialX, double initialY) {
+    private void createBalls(
+            int numBalls, double minRadius, double maxRadius, double minSpeed, double maxSpeed, double initialX, double initialY) {
         final Random rng = new Random();
         for (int i = 0; i < numBalls; i++) {
             double radius = minRadius + (maxRadius - minRadius) * rng.nextDouble();
@@ -191,41 +201,44 @@ public class AnimationTimerTest extends Application {
             final double speed = minSpeed + (maxSpeed - minSpeed) * rng.nextDouble();
             final double angle = 2 * PI * rng.nextDouble();
             Ball ball = new Ball(initialX, initialY, radius, speed * cos(angle), speed * sin(angle), mass);
-            ball.getView().setFill(COLORS[i % COLORS.length]);
+            ball.getView()
+                .setFill(COLORS[i % COLORS.length]);
             //            ball.getView().setFill(i==0 ? RED : TRANSPARENT);
             balls.add(ball);
         }
     }
 
     private void constrainBallsOnResize(final Pane ballContainer) {
-        ballContainer.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (newValue.doubleValue() < oldValue.doubleValue()) {
-                    for (Ball b : balls) {
-                        double max = newValue.doubleValue() - b.getRadius();
-                        if (b.getCenterX() > max) {
-                            b.setCenterX(max);
-                        }
-                    }
-                }
-            }
-        });
+        ballContainer.widthProperty()
+                     .addListener(new ChangeListener<Number>() {
+                         @Override
+                         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                             if (newValue.doubleValue() < oldValue.doubleValue()) {
+                                 for (Ball b : balls) {
+                                     double max = newValue.doubleValue() - b.getRadius();
+                                     if (b.getCenterX() > max) {
+                                         b.setCenterX(max);
+                                     }
+                                 }
+                             }
+                         }
+                     });
 
-        ballContainer.heightProperty().addListener(new ChangeListener<Number>() {
+        ballContainer.heightProperty()
+                     .addListener(new ChangeListener<Number>() {
 
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (newValue.doubleValue() < oldValue.doubleValue()) {
-                    for (Ball b : balls) {
-                        double max = newValue.doubleValue() - b.getRadius();
-                        if (b.getCenterY() > max) {
-                            b.setCenterY(max);
-                        }
-                    }
-                }
-            }
-        });
+                         @Override
+                         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                             if (newValue.doubleValue() < oldValue.doubleValue()) {
+                                 for (Ball b : balls) {
+                                     double max = newValue.doubleValue() - b.getRadius();
+                                     if (b.getCenterY() > max) {
+                                         b.setCenterY(max);
+                                     }
+                                 }
+                             }
+                         }
+                     });
     }
 
     private static class Ball {
@@ -243,15 +256,17 @@ public class AnimationTimerTest extends Application {
             this.xVelocity = new SimpleDoubleProperty(this, "xVelocity", xVelocity);
             this.yVelocity = new SimpleDoubleProperty(this, "yVelocity", yVelocity);
             this.speed = new ReadOnlyDoubleWrapper(this, "speed");
-            speed.bind(Bindings.createDoubleBinding(new Callable<Double>() {
+            speed.bind(Bindings.createDoubleBinding(
+                    new Callable<Double>() {
 
-                @Override
-                public Double call() throws Exception {
-                    final double xVel = getXVelocity();
-                    final double yVel = getYVelocity();
-                    return sqrt(xVel * xVel + yVel * yVel);
-                }
-            }, this.xVelocity, this.yVelocity));
+                        @Override
+                        public Double call() throws Exception {
+                            final double xVel = getXVelocity();
+                            final double yVel = getYVelocity();
+                            return sqrt(xVel * xVel + yVel * yVel);
+                        }
+                    }, this.xVelocity, this.yVelocity
+            ));
             this.mass = mass;
             this.radius = radius;
             view.setRadius(radius);

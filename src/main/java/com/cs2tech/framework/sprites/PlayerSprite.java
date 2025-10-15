@@ -11,8 +11,18 @@ public abstract class PlayerSprite extends Sprite {
     protected boolean isPressingSelect = false;
     protected boolean isPressingStart = false;
 
-    public PlayerSprite(final Position initialPosition, final Size size, final Speed speed, final List<Integer> imageIndexes, final AnimationSettings animationSettings) {
+    public PlayerSprite(
+            final Position initialPosition, final Size size, final Speed speed, final List<Integer> imageIndexes,
+            final AnimationSettings animationSettings
+    ) {
         super(initialPosition, size, speed, imageIndexes, animationSettings);
+    }
+
+    public PlayerSprite(
+            final Position initialPosition, final ProportionalSize proportionalSize, final Speed speed, final List<Integer> imageIndexes,
+            final AnimationSettings animationSettings
+    ) {
+        super(initialPosition, proportionalSize.getSize(), speed, imageIndexes, animationSettings);
     }
 
     public void throwingBomb(boolean value) {
@@ -31,7 +41,10 @@ public abstract class PlayerSprite extends Sprite {
     public void draw(final GraphicsContext gc) {
         handleActions();
 
-        gc.drawImage(GameElements.get().getImage(getImageIndex()), position.x, position.y, size.width, size.height);
+        gc.drawImage(
+                GameElements.get()
+                            .getImage(getImageIndex()), getPosition().x, getPosition().y, size.width, size.height
+        );
     }
 
     private int getImageIndex() {

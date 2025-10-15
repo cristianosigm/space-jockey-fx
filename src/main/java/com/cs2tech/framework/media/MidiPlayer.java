@@ -10,7 +10,6 @@ public class MidiPlayer extends CommonPlayer {
     private final Logger logger = LoggerFactory.getLogger(MidiPlayer.class);
 
     private Sequencer midiSequencer = null;
-    private Sequence midiTrack;
     private boolean continuous = true;
 
     public MidiPlayer() {
@@ -56,7 +55,7 @@ public class MidiPlayer extends CommonPlayer {
             }
 
             try {
-                midiTrack = MidiSystem.getSequence(getCurrentFile());
+                final Sequence midiTrack = MidiSystem.getSequence(getCurrentFile());
                 midiSequencer.open();
                 midiSequencer.setSequence(midiTrack);
 

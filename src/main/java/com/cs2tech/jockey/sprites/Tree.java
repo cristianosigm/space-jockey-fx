@@ -1,17 +1,20 @@
 package com.cs2tech.jockey.sprites;
 
-import com.cs2tech.framework.core.AnimationSettings;
-import com.cs2tech.framework.core.Position;
-import com.cs2tech.framework.core.Size;
-import com.cs2tech.framework.core.Speed;
+import com.cs2tech.framework.core.*;
 import com.cs2tech.framework.sprites.EnemyShipSprite;
+import com.cs2tech.jockey.main.JockeyUtils;
 
 import java.util.List;
 
 public class Tree extends EnemyShipSprite {
 
-    public Tree(double windowWidth, double windowHeight) {
-        super(new Position(windowWidth - 1, windowHeight - 140), new Size(74, 100), new Speed(3, 0, 3), List.of(19), new AnimationSettings(0));
+    public Tree() {
+        super(new Position(), new ProportionalSize(7.23, 13.02), new Speed(4, 0, 4), List.of(19), new AnimationSettings(0));
+
+        setPosition(new Position(
+                GameElements.get()
+                            .getGameResolution().width - 1, JockeyUtils.getGroundLevel(size.height)
+        ));
 
         movingLeft(true);
     }
