@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class JockeyApplication extends Application {
         logger.info("Starting the game...");
 
         // TODO: set the game configuration into a proper config file
-        final BorderPane pane = new BorderPane();
+        final StackPane pane = new StackPane();
         final Scene scene = new Scene(pane, windowWidth, windowHeight);
 
         // adding controller listeners ------------------------------------------------------------------

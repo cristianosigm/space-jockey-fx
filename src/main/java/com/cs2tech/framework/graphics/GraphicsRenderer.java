@@ -3,6 +3,8 @@ package com.cs2tech.framework.graphics;
 import com.cs2tech.framework.core.GameElements;
 import com.cs2tech.framework.physics.CollisionEngine;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Dimension2D;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,6 +21,9 @@ public class GraphicsRenderer {
                 GameElements.get()
                             .getGameResolution().height
         );
+        canvas.setCache(true);
+        canvas.setCacheHint(CacheHint.SCALE);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         pane.getChildren()
             .add(canvas);
@@ -27,12 +32,18 @@ public class GraphicsRenderer {
 
         stage.setScene(initialScene);
         stage.setTitle("Space Jockey v0.1");
+
+        // set to full screen ---------------------------------------
+        stage.setFullScreenExitHint("Press ESC to exit fullscreen");
+        stage.setFullScreen(true);
+        // set to full screen ---------------------------------------
+
         stage.show();
     }
 
-    private void createAnimationTimer(GraphicsContext gc) {
-        final long targetFrameTime = 1000 / GameElements.get()
-                                                        .getScreenRefreshRate();
+
+    private void createAnimationTimer(final GraphicsContext gc) {
+        final long targetFrameTime = 1000 / GameElements.get().getScreenRefreshRate();
 
         new AnimationTimer() {
             long lastFrameTime = 0;
@@ -48,7 +59,7 @@ public class GraphicsRenderer {
         }.start();
     }
 
-    private void drawFrame(GraphicsContext gc) {
+    private void drawFrame(final GraphicsContext gc) {
         // rendering level
         GameElements.get()
                     .getCurrentLevel()
