@@ -1,66 +1,77 @@
 package com.cs2tech.framework.graphics;
 
 import com.cs2tech.framework.core.GameElements;
+import com.cs2tech.framework.physics.CollisionEngine;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Dimension2D;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class GraphicsRenderer {
-    private final Logger logger = LoggerFactory.getLogger(GraphicsRenderer.class);
+    private final CollisionEngine ce = new CollisionEngine();
 
-    // TODO: read from configuration file
-    private final int FPS = 60;
+    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane) {
+        Canvas canvas = new Canvas(
+                GameElements.get()
+                            .getGameResolution().width,
+                GameElements.get()
+                            .getGameResolution().height
+        );
+        canvas.setCache(true);
+        canvas.setCacheHint(CacheHint.SCALE);
 
-    private final Pane pane;
-    private final Canvas canvas;
-    private final GraphicsContext gc;
-
-    public GraphicsRenderer(final Stage stage, final Scene initialScene, final Pane pane, final Dimension2D screenSize) {
-        this.pane = pane;
-        canvas = new Canvas(screenSize.getWidth(), screenSize.getHeight());
-        gc = canvas.getGraphicsContext2D();
-        this.pane.getChildren().add(canvas);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        pane.getChildren()
+            .add(canvas);
 
         createAnimationTimer(gc);
 
         stage.setScene(initialScene);
         stage.setTitle("Space Jockey v0.1");
+
+        // set to full screen ---------------------------------------
+        stage.setFullScreenExitHint("Press ESC to exit fullscreen");
+        stage.setFullScreen(true);
+        // set to full screen ---------------------------------------
+
         stage.show();
     }
 
-    private void createAnimationTimer(GraphicsContext gc) {
+
+    private void createAnimationTimer(final GraphicsContext gc) {
+        final long targetFrameTime = 1000 / GameElements.get().getScreenRefreshRate();
+
         new AnimationTimer() {
             long lastFrameTime = 0;
 
+            @Override
             public void handle(long now) {
-                if (lastFrameTime == 0) {
-                    lastFrameTime = now;
+                if ((System.currentTimeMillis() - lastFrameTime) > targetFrameTime) {
+                    ce.checkCollision();
                     drawFrame(gc);
-                    return;
-                }
-
-                if (now - lastFrameTime > 1000000000 / FPS) {
-                    lastFrameTime = now;
-                    drawFrame(gc);
+                    lastFrameTime = System.currentTimeMillis();
                 }
             }
         }.start();
     }
 
-    private void drawFrame(GraphicsContext gc) {
-        // paint background
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    private void drawFrame(final GraphicsContext gc) {
+        // rendering level
+        GameElements.get()
+                    .getCurrentLevel()
+                    .draw(gc);
 
         // drawing sprites
-        GameElements.get().getRenderables().forEach(entry -> entry.draw(gc));
-        GameElements.get().getPlayer().draw(gc);
+        GameElements.get()
+                    .getRenderables()
+                    .forEach(entry -> entry.draw(gc));
+        GameElements.get()
+                    .getPlayer()
+                    .draw(gc);
     }
+
 }
